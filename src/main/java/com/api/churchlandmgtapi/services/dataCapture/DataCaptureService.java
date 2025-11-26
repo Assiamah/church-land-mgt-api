@@ -125,7 +125,6 @@ public class DataCaptureService {
             }
         }
         
-        System.out.println(result);
         return result;
     }
     
