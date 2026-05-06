@@ -31,4 +31,13 @@ public class DocumentController {
 
         return ResponseEntity.ok(new JSONObject(result).toMap());
     }
+
+    @PostMapping("/get_uploaded_document_count")
+    public ResponseEntity<?> getUploadedDocumentCount(@RequestBody String jsonReq) throws Exception {
+        documentService.con = dbConnection.getConnection();
+        String result = documentService.getUploadedDocumentCount(jsonReq);
+        documentService.con.close();
+
+        return ResponseEntity.ok(new JSONObject(result).toMap());
+    }
 }
