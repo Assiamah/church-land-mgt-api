@@ -2,6 +2,7 @@ package com.api.churchlandmgtapi.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,23 @@ public class DocumentController {
         documentService.con.close();
 
         return ResponseEntity.ok(new JSONObject(result).toMap());
+    }
+
+    @GetMapping("/get_document_count")
+    public ResponseEntity<?> getDocumentCount() throws Exception {
+        documentService.con = dbConnection.getConnection();
+        String result = documentService.getDocumentCount();
+        documentService.con.close();
+
+        return ResponseEntity.ok(new JSONObject(result).toMap());
+    }
+
+    @GetMapping("/get_uploaded_documents")
+    public ResponseEntity<?> getUploadedDocuments() throws Exception {
+        documentService.con = dbConnection.getConnection();
+        String result = documentService.getUploadedDocuments();
+        documentService.con.close();
+
+        return ResponseEntity.ok(result);
     }
 }
