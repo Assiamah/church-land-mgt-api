@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.codehaus.jettison.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.api.churchlandmgtapi.services.documents.DocumentService;
 import com.api.churchlandmgtapi.config.DBConnection;
 
@@ -21,8 +20,11 @@ public class DocumentController {
     
     DocumentService documentService = new DocumentService();
 
-    @Autowired
-    private DBConnection dbConnection;
+    private final DBConnection dbConnection;
+
+    DocumentController(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
     
     @PostMapping("/save_data_capture_documents")
     public ResponseEntity<?> saveDataCaptureDocuments(@RequestBody String jsonReq) throws Exception {
