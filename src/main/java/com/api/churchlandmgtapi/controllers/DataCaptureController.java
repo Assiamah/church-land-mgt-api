@@ -61,4 +61,46 @@ public class DataCaptureController {
         dataCaptureService.con.close();
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/get_quality_control_queue")
+    public ResponseEntity<?> getQualityControlQueue(@RequestBody String jsonReq) throws Exception {
+        dataCaptureService.con = dbConnection.getConnection();
+        String result = dataCaptureService.getQualityControlQueue(jsonReq);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/get_quality_control_record")
+    public ResponseEntity<?> getQualityControlRecord(@RequestBody String jsonReq) throws Exception {
+        dataCaptureService.con = dbConnection.getConnection();
+        String result = dataCaptureService.getQualityControlRecord(jsonReq);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/submit_quality_control_review")
+    public ResponseEntity<?> submitQualityControlReview(@RequestBody String jsonReq) throws Exception {
+        dataCaptureService.con = dbConnection.getConnection();
+        String result = dataCaptureService.submitQualityControlReview(jsonReq);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/update_quality_control_entry")
+    public ResponseEntity<?> updateQualityControlEntry(@RequestBody String jsonReq) throws Exception {
+        dataCaptureService.con = dbConnection.getConnection();
+        String result = dataCaptureService.updateQualityControlEntry(jsonReq);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/get_returned_quality_control_entries")
+    public ResponseEntity<?> getReturnedQualityControlEntries(@RequestBody String jsonReq) throws Exception {
+        dataCaptureService.con = dbConnection.getConnection();
+        String result = dataCaptureService.getReturnedQualityControlEntries(jsonReq);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/get_data_management_records")
+    public ResponseEntity<?> getDataManagementRecords(@RequestBody String jsonReq) throws Exception {
+        dataCaptureService.con = dbConnection.getConnection();
+        String result = dataCaptureService.getDataManagementRecords(jsonReq);
+        return ResponseEntity.ok(result);
+    }
 }

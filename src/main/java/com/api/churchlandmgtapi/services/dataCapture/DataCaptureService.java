@@ -17,7 +17,7 @@ public class DataCaptureService {
         }
 
         String result = null;
-        String SQL = "SELECT maps.save_data_capture(?::jsonb) AS result"; // 👈 add alias
+        String SQL = "SELECT maps.save_data_capture_for_quality_control(?::jsonb) AS result";
 
         try (PreparedStatement pstmt = con.prepareStatement(SQL)) {
             pstmt.setString(1, jsonReq);
@@ -199,6 +199,64 @@ public class DataCaptureService {
                 }
             }
         }
+        return result;
+    }
+
+    public String getQualityControlQueue(String jsonReq) throws Exception {
+        return executeJsonFunction("maps.get_quality_control_queue", jsonReq);
+    }
+
+    public String getQualityControlRecord(String jsonReq) throws Exception {
+        return executeJsonFunction("maps.get_quality_control_record", jsonReq);
+    }
+
+    public String submitQualityControlReview(String jsonReq) throws Exception {
+        return executeJsonFunction("maps.submit_quality_control_review", jsonReq);
+    }
+
+    public String updateQualityControlEntry(String jsonReq) throws Exception {
+        return executeJsonFunction("maps.update_quality_control_entry", jsonReq);
+    }
+
+    public String getReturnedQualityControlEntries(String jsonReq) throws Exception {
+        return executeJsonFunction("maps.get_returned_quality_control_entries", jsonReq);
+    }
+
+    public String getDataManagementRecords(String jsonReq) throws Exception {
+        return executeJsonFunction("maps.get_data_management_records", jsonReq);
+    }
+
+    private String executeJsonFunction(String functionName, String jsonReq) throws Exception {
+        if (con == null) {
+            throw new Exception("Database connection is not established");
+        }
+
+        String result = null;
+        String sql = "SELECT " + functionName + "(?::jsonb) AS result";
+
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, jsonReq);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    result = rs.getString("result");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error executing " + functionName + ": " + e.getMessage());
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Database error: " + e.getMessage());
+            result = errorResponse.toString();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
         return result;
     }
 }
