@@ -247,5 +247,92 @@ public class SetupService {
 		}
 		return result;
     }
-    
+
+    public String addDesignation(String jsonReq) throws Exception {
+        if (con == null) {
+            throw new Exception("Database connection is not established");
+        }
+        String result = null;
+        String SQL = "SELECT * FROM system.add_designation(?::json)";
+        Connection conn = con;
+        try (PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setString(1, jsonReq);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                result = rs.getString("add_designation");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    public String getDesignations(String jsonReq) throws Exception {
+        if (con == null) {
+            throw new Exception("Database connection is not established");
+        }
+        String result = null;
+        String SQL = "SELECT * FROM system.get_designations(?::json)";
+        Connection conn = con;
+        try (PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setString(1, jsonReq);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                result = rs.getString("get_designations");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    public String updateDesignation(String jsonReq) throws Exception {
+        if (con == null) {
+            throw new Exception("Database connection is not established");
+        }
+        String result = null;
+        String SQL = "SELECT * FROM system.update_designation(?::json)";
+        Connection conn = con;
+        try (PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setString(1, jsonReq);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                result = rs.getString("update_designation");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
 }
