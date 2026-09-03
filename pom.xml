@@ -184,6 +184,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+			<finalName>church-land-mgt-api</finalName>
 	</build>
 
 </project>
