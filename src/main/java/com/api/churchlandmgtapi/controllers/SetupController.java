@@ -87,4 +87,28 @@ public class SetupController {
         setupService.con.close();
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/add_designation")
+    public ResponseEntity<?> addDesignation(@RequestBody String jsonReq) throws Exception {
+        setupService.con = dbConnection.getConnection();
+        String result = setupService.addDesignation(jsonReq);
+        setupService.con.close();
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/get_designations")
+    public ResponseEntity<?> getDesignations(@RequestBody String jsonReq) throws Exception {
+        setupService.con = dbConnection.getConnection();
+        String result = setupService.getDesignations(jsonReq);
+        setupService.con.close();
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/update_designation")
+    public ResponseEntity<?> updateDesignation(@RequestBody String jsonReq) throws Exception {
+        setupService.con = dbConnection.getConnection();
+        String result = setupService.updateDesignation(jsonReq);
+        setupService.con.close();
+        return ResponseEntity.ok(result);
+    }
 }

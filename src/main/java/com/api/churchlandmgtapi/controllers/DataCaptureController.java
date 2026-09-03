@@ -46,6 +46,18 @@ public class DataCaptureController {
         return ResponseEntity.ok(result);
     }
 
+
+       @PostMapping("/get_data_capture_by_congregation_name")
+    public ResponseEntity<?> getCaptureByCongregationName(@RequestBody String jsonReq)  throws Exception {
+        dataCaptureService.con = dbConnection.getConnection();
+        String result = dataCaptureService.getCaptureByCongregationName(jsonReq);
+        dataCaptureService.con.close();
+        return ResponseEntity.ok(result);
+    }
+
+
+
+
     @PostMapping("/save_coordinate_upload")
     public ResponseEntity<?> saveCoordinateUpload(@RequestBody String jsonReq)  throws Exception {
         dataCaptureService.con = dbConnection.getConnection();

@@ -62,4 +62,20 @@ public class AuthController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/request_password_reset")
+    public ResponseEntity<?> Requestpasswordreset(@RequestBody String jsonReq)  throws Exception {
+        authService.con = dbConnection.getConnection();
+        String result = authService.Requestpasswordreset(jsonReq);
+        authService.con.close();
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/verify_password_reset_otp")
+    public ResponseEntity<?> Verifypasswordresetotp(@RequestBody String jsonReq)  throws Exception {
+        authService.con = dbConnection.getConnection();
+        String result = authService.Verifypasswordresetotp(jsonReq);
+        authService.con.close();
+        return ResponseEntity.ok(result);
+    }
+
 }

@@ -32,4 +32,20 @@ public class ReportController {
         reportService.con.close();
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/get_land_report_registered_lands")
+    public ResponseEntity<?> getLandReportRegisteredLands(@RequestBody String jsonReq) throws Exception {
+        reportService.con = dbConnection.getConnection();
+        String result = reportService.getLandReportRegisteredLands(jsonReq);
+        reportService.con.close();
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/get_land_report_disputed_lands")
+    public ResponseEntity<?> getLandReportDisputedLands(@RequestBody String jsonReq) throws Exception {
+        reportService.con = dbConnection.getConnection();
+        String result = reportService.getLandReportDisputedLands(jsonReq);
+        reportService.con.close();
+        return ResponseEntity.ok(result);
+    }
 }

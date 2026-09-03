@@ -128,6 +128,50 @@ public class DataCaptureService {
         return result;
     }
 
+
+
+
+        public String getCaptureByCongregationName(String jsonReq) throws Exception {
+        if (con == null) {
+            throw new Exception("Database connection is not established");
+        }
+
+        String result = null;
+        String SQL = "SELECT maps.get_data_capture_by_congregation_name(?::jsonb) AS result"; // 👈 add alias
+
+        try (PreparedStatement pstmt = con.prepareStatement(SQL)) {
+            pstmt.setString(1, jsonReq);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Retrieve the JSON result
+                String jsonResult = rs.getString("result"); // 👈 use the alias
+                result = jsonResult; // already JSON
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error getting data capture by congregation name: " + e.getMessage());
+
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Database error: " + e.getMessage());
+            result = errorResponse.toString();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    // Handle the exception if needed
+                }
+            }
+        }
+        
+        return result;
+    }
+
+
     public String saveCoordinateUpload(String jsonReq) throws Exception {
         if (con == null) {
             throw new Exception("Database connection is not established");
