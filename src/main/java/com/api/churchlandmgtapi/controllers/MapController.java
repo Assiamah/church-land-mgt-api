@@ -2,6 +2,7 @@ package com.api.churchlandmgtapi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,13 @@ public class MapController {
     @Autowired
     private DBConnection dbConnection;
 
+    @GetMapping("/get_preby_land_centroids_geojson")
+    public ResponseEntity<?> getPrebyLandCentroidsGeoJson() throws Exception {
+        mapService.con = dbConnection.getConnection();
+        String result = mapService.getPrebyLandCentroidsGeoJson();
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/get_land_polygons")
     public ResponseEntity<?> getLandPolygons(@RequestBody String jsonReq) throws Exception {
         mapService.con = dbConnection.getConnection();
@@ -29,4 +37,5 @@ public class MapController {
         mapService.con.close();
         return ResponseEntity.ok(result);
     }
+
 }

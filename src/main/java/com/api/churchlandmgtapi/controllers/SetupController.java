@@ -64,6 +64,25 @@ public class SetupController {
         return ResponseEntity.ok(result);
     }
 
+
+    @PostMapping("/select_district")
+    public ResponseEntity<?> selectDistrict(@RequestBody String jsonReq)  throws Exception {
+        setupService.con = dbConnection.getConnection();
+        String result = setupService.selectDistrict(jsonReq);
+        setupService.con.close();
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/select_congregation")
+    public ResponseEntity<?> selectCongregation(@RequestBody String jsonReq)  throws Exception {
+        setupService.con = dbConnection.getConnection();
+        String result = setupService.selectCongregation(jsonReq);
+        setupService.con.close();
+        return ResponseEntity.ok(result);
+    }
+
+
+
     @PostMapping("/add_congregation")
     public ResponseEntity<?> addCongregation(@RequestBody String jsonReq)  throws Exception {
         setupService.con = dbConnection.getConnection();
