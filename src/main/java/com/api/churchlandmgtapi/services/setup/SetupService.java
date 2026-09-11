@@ -157,6 +157,75 @@ public class SetupService {
 		return result;
     }
 
+
+
+	 public String selectDistrict(String jsonReq) throws Exception {
+        if (con == null) {
+            throw new Exception("Database connection is not established");
+        }
+        String result = null;
+        String SQL = "SELECT * FROM system.select_district(?::json)";
+		Connection conn = con;
+		try (PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+			pstmt.setString(1, jsonReq);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getString("select_district");
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// Print Errors in console.
+			System.out.println(e.getMessage());
+			throw e;
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+		return result;
+    }
+
+
+
+	 public String selectCongregation(String jsonReq) throws Exception {
+        if (con == null) {
+            throw new Exception("Database connection is not established");
+        }
+        String result = null;
+        String SQL = "SELECT * FROM system.select_congregation(?::json)";
+		Connection conn = con;
+		try (PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+			pstmt.setString(1, jsonReq);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getString("select_congregation");
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// Print Errors in console.
+			System.out.println(e.getMessage());
+			throw e;
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+		return result;
+    }
+
+
+	
+
+	
+
     public String addCongregation(String jsonReq) throws Exception {
         if (con == null) {
             throw new Exception("Database connection is not established");
